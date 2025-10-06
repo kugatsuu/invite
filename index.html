@@ -13,7 +13,6 @@
       background: linear-gradient(135deg, #fdf5e6, #ffe6f2, #e6f7ff);
       background-attachment: fixed;
       color: #b8860b;
-      line-height: 1.6;
       overflow-x: hidden;
       position: relative;
     }
@@ -44,10 +43,20 @@
     }
     .hero p {
       font-size: 1.6rem;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
       color: #8b7500;
       animation: fadeInUp 2s ease;
     }
+
+    .hero .name {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #d4af37;
+      text-shadow: 0 0 15px rgba(255,215,0,0.7), 0 0 30px rgba(255,140,0,0.5);
+      animation: glow 3s ease-in-out infinite alternate, fadeIn 2s ease;
+      margin-bottom: 30px;
+    }
+
     .btn-scroll {
       padding: 14px 28px;
       font-size: 1.1rem;
@@ -115,10 +124,10 @@
       bottom: -150px;
       width: 80px;
       height: 100px;
-      background: radial-gradient(circle at 30% 30%, #ffd700, #c29200);
       border-radius: 50% 50% 45% 55%;
       animation: floatUp 12s infinite ease-in;
-      opacity: 0.85;
+      opacity: 0.9;
+      filter: brightness(1.1);
     }
     .balloon::after {
       content: '';
@@ -131,10 +140,14 @@
       transform: translateX(-50%);
     }
 
-    .balloon:nth-child(1) { left: 15%; animation-delay: 0s; }
-    .balloon:nth-child(2) { left: 40%; animation-delay: 3s; background: radial-gradient(circle at 30% 30%, #ff69b4, #c71585); }
-    .balloon:nth-child(3) { left: 70%; animation-delay: 6s; background: radial-gradient(circle at 30% 30%, #87cefa, #4682b4); }
+    /* Разные шары */
+    .balloon:nth-child(1) { left: 10%; background: radial-gradient(circle at 30% 30%, #ffd700, #c29200); animation-delay: 0s; }
+    .balloon:nth-child(2) { left: 30%; background: radial-gradient(circle at 30% 30%, #ff69b4, #c71585); animation-delay: 3s; }
+    .balloon:nth-child(3) { left: 50%; background: radial-gradient(circle at 30% 30%, #87cefa, #4682b4); animation-delay: 5s; }
+    .balloon:nth-child(4) { left: 70%; background: radial-gradient(circle at 30% 30%, #98fb98, #2e8b57); animation-delay: 1.5s; }
+    .balloon:nth-child(5) { left: 85%; background: radial-gradient(circle at 30% 30%, #ffa07a, #ff4500); animation-delay: 4.5s; }
 
+    /* Анимации */
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-50px); }
       to { opacity: 1; transform: translateY(0); }
@@ -152,6 +165,10 @@
       50% { opacity: 1; }
       100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
     }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500; }
+      to { text-shadow: 0 0 25px #fffacd, 0 0 40px #ffd700; }
+    }
   </style>
 </head>
 <body>
@@ -160,11 +177,14 @@
   <div class="balloon"></div>
   <div class="balloon"></div>
   <div class="balloon"></div>
+  <div class="balloon"></div>
+  <div class="balloon"></div>
 
   <!-- Главный экран -->
   <section class="hero show">
     <h1>50 лет — это только начало!</h1>
     <p>Приглашаем вас на юбилей нашей дорогой мамы</p>
+    <p class="name">Петровой Арюуны Анатольевны</p>
     <button class="btn-scroll" onclick="document.getElementById('details').scrollIntoView({behavior:'smooth'})">Узнать подробнее</button>
   </section>
 
@@ -188,16 +208,12 @@
     const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('show');
       });
     }, { threshold: 0.2 });
 
     sections.forEach(section => {
-      if (!section.classList.contains('hero')) {
-        observer.observe(section);
-      }
+      if (!section.classList.contains('hero')) observer.observe(section);
     });
   </script>
 
